@@ -1,3 +1,5 @@
 .vs/
 src/Dapp.Api/bin/
 src/Dapp.Api/obj/
+tests/Dappr.Api.UnitTests/bin/
+tests/Dappr.Api.UnitTests/obj/
