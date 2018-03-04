@@ -2,8 +2,8 @@
 using System.Data;
 using System.Data.SqlClient;
 using Dapp.Api.Configuration.Settings;
+using Dapp.Api.Data;
 using Dapp.Api.Data.Model;
-using Dapper;
 using Microsoft.Extensions.Options;
 
 namespace Dapp.Api.Services
@@ -12,6 +12,10 @@ namespace Dapp.Api.Services
     {
         private readonly string connectionString;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeviceService"/> class.
+        /// </summary>
+        /// <param name="setting">The setting.</param>
         public DeviceService(IOptions<ConnectionSettings> setting)
         {
             connectionString = setting.Value.DefaultConnection;
@@ -19,22 +23,31 @@ namespace Dapp.Api.Services
 
         private IDbConnection Connection => new SqlConnection(connectionString);
 
-        public void Add(Device device)
+        /// <summary>
+        /// Gets all devices.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Device> GetAll()
         {
-            using (IDbConnection dbConnection = Connection)
+            using (var unitOfWork = new UnitOfWork(this.connectionString))
             {
-                string sQuery = "INSERT INTO Devices (DeviceId, DeviceTitle)" + " VALUES(@DeviceId, @DeviceTitle)";
-                dbConnection.Open();
-                dbConnection.Execute(sQuery, device);
+                return unitOfWork.DeviceRepository.All();
             }
         }
 
-        public IEnumerable<Device> GetAll()
+        /// <summary>
+        /// Adds the specified device.
+        /// </summary>
+        /// <param name="device">The device.</param>
+        public void Add(Device device)
         {
-            using (IDbConnection dbConnection = Connection)
+            using (var unitOfWork = new UnitOfWork(this.connectionString))
             {
-                dbConnection.Open();
-                return dbConnection.Query<Device>("SELECT * FROM Devices");
+                // Adds new device
+                unitOfWork.DeviceRepository.Add(device);
+
+                // Commit transaction
+                unitOfWork.Commit();
             }
         }
     }
