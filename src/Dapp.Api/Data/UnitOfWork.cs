@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
 
 namespace Dapp.Api.Data
 {
@@ -16,9 +15,20 @@ namespace Dapp.Api.Data
         /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
-        public UnitOfWork(string connectionString)
+        //public UnitOfWork(string connectionString)
+        //{
+        //    connection = new SqlConnection(connectionString);
+        //    connection.Open();
+        //    transaction = connection.BeginTransaction();
+        //}
+
+        public UnitOfWork(IConnectionFactory connectionFactory)
         {
-            connection = new SqlConnection(connectionString);
+            this.connection = connectionFactory.Connection;
+        }
+
+        public void BeginTransaction()
+        {
             connection.Open();
             transaction = connection.BeginTransaction();
         }

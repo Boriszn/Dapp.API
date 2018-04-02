@@ -7,7 +7,7 @@ using Dapper;
 
 namespace Dapp.Api.Data
 {
-    internal class DeviceRepository : RepositoryBase, IDeviceRepository
+    public class DeviceRepository : RepositoryBase, IDeviceRepository
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DeviceRepository"/> class.
@@ -41,7 +41,7 @@ namespace Dapp.Api.Data
                 throw new ArgumentNullException(nameof(device));
 
             device.DeviceId = Connection.ExecuteScalar<Guid>(
-                "INSERT INTO Devices(DeviceId, DeviceTitle) VALUES(@DeviceId, @DeviceTitle, @Age); SELECT SCOPE_IDENTITY()",
+                "INSERT INTO Devices(DeviceId, DeviceTitle) VALUES(@DeviceId, @DeviceTitle); SELECT SCOPE_IDENTITY()",
                 new { device.DeviceId, device.DeviceTitle },
                 Transaction
             );

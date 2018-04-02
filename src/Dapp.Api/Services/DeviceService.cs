@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using Dapp.Api.Configuration.Settings;
 using Dapp.Api.Data;
 using Dapp.Api.Data.Model;
@@ -10,18 +11,16 @@ namespace Dapp.Api.Services
 {
     public class DeviceService : IDeviceService
     {
-        private readonly string connectionString;
+        private readonly IUnitOfWork unitOfWork;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DeviceService"/> class.
+        /// Initializes a new instance of the <see cref="DeviceService" /> class.
         /// </summary>
-        /// <param name="setting">The setting.</param>
-        public DeviceService(IOptions<ConnectionSettings> setting)
+        /// <param name="unitOfWork">The unit of work.</param>
+        public DeviceService(IUnitOfWork unitOfWork)
         {
-            connectionString = setting.Value.DefaultConnection;
+            this.unitOfWork = unitOfWork;
         }
-
-        private IDbConnection Connection => new SqlConnection(connectionString);
 
         /// <summary>
         /// Gets all devices.
@@ -29,10 +28,9 @@ namespace Dapp.Api.Services
         /// <returns></returns>
         public IEnumerable<Device> GetAll()
         {
-            using (var unitOfWork = new UnitOfWork(this.connectionString))
-            {
-                return unitOfWork.DeviceRepository.All();
-            }
+            unitOfWork.BeginTransaction();
+
+            return unitOfWork.DeviceRepository.All().ToList();
         }
 
         /// <summary>
@@ -41,14 +39,13 @@ namespace Dapp.Api.Services
         /// <param name="device">The device.</param>
         public void Add(Device device)
         {
-            using (var unitOfWork = new UnitOfWork(this.connectionString))
-            {
-                // Adds new device
-                unitOfWork.DeviceRepository.Add(device);
+            unitOfWork.BeginTransaction();
 
-                // Commit transaction
-                unitOfWork.Commit();
-            }
+            // Adds new device
+            unitOfWork.DeviceRepository.Add(device);
+
+            // Commit transaction
+            unitOfWork.Commit();
         }
     }
 }

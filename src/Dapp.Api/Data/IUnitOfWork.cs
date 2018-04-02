@@ -1,4 +1,6 @@
-﻿namespace Dapp.Api.Data
+﻿using System;
+
+namespace Dapp.Api.Data
 {
     public interface IUnitOfWork
     {
@@ -9,6 +11,11 @@
         /// The device repository.
         /// </value>
         IDeviceRepository DeviceRepository { get; }
+
+        /// <summary>
+        /// Begins the transaction.
+        /// </summary>
+        void BeginTransaction();
 
         /// <summary>
         /// Commits this instance.

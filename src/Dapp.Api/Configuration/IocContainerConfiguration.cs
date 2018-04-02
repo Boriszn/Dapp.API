@@ -1,4 +1,6 @@
-﻿using Dapp.Api.Services;
+﻿using System.Data.SqlClient;
+using Dapp.Api.Data;
+using Dapp.Api.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +19,9 @@ namespace Dapp.Api.Configuration
         public static void ConfigureService(IServiceCollection services, IConfigurationRoot configuration)
         {
             services.AddTransient<IDeviceService, DeviceService>();
+
+            services.AddTransient<IConnectionFactory, ConnectionFactory>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
     }
 }
