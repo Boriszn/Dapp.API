@@ -1,4 +1,5 @@
-﻿using Dapp.Api.Services;
+﻿using Dapp.Api.Data.Infrastructure;
+using Dapp.Api.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +17,12 @@ namespace Dapp.Api.Configuration
         /// <param name="configuration">The configuration.</param>
         public static void ConfigureService(IServiceCollection services, IConfigurationRoot configuration)
         {
+            // Services
             services.AddTransient<IDeviceService, DeviceService>();
+
+            // Infrastructure
+            services.AddTransient<IConnectionFactory, ConnectionFactory>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
     }
 }
