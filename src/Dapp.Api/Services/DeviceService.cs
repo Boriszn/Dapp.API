@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using Dapp.Api.Configuration.Settings;
 using Dapp.Api.Data;
 using Dapp.Api.Data.Model;
-using Microsoft.Extensions.Options;
 
 namespace Dapp.Api.Services
 {

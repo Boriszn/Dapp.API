@@ -3,6 +3,7 @@ using System.Data;
 
 namespace Dapp.Api.Data
 {
+    /// <inheritdoc />
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private IDbConnection connection;
@@ -14,19 +15,13 @@ namespace Dapp.Api.Data
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
         /// </summary>
-        /// <param name="connectionString">The connection string.</param>
-        //public UnitOfWork(string connectionString)
-        //{
-        //    connection = new SqlConnection(connectionString);
-        //    connection.Open();
-        //    transaction = connection.BeginTransaction();
-        //}
-
+        /// <param name="connectionFactory">The connection factory.</param>
         public UnitOfWork(IConnectionFactory connectionFactory)
         {
             this.connection = connectionFactory.Connection;
         }
 
+        /// <inheritdoc />
         public void BeginTransaction()
         {
             connection.Open();

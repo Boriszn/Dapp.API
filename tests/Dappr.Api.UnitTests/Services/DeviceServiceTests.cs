@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using Dapp.Api.Configuration.Settings;
-using Dapp.Api.Data;
 using Dapp.Api.Data.Model;
 using Dapp.Api.Services;
 using Microsoft.Extensions.Options;

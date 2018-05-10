@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace Dapp.Api.Data
+﻿namespace Dapp.Api.Data
 {
+    /// <summary>
+    /// Represents repository/object creation and transaction management
+    /// </summary>
     public interface IUnitOfWork
     {
         /// <summary>
