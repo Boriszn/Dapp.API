@@ -8,3 +8,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 ### Added
 
 - Init base project structure
+- [DA-1] Add UnitOfWork, and Repository

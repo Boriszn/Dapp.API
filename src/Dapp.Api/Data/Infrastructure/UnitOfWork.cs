@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
+using Dapp.Api.Data.Repositories;
 
-namespace Dapp.Api.Data
+namespace Dapp.Api.Data.Infrastructure
 {
+    /// <inheritdoc />
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private IDbConnection connection;
@@ -15,10 +16,15 @@ namespace Dapp.Api.Data
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
         /// </summary>
-        /// <param name="connectionString">The connection string.</param>
-        public UnitOfWork(string connectionString)
+        /// <param name="connectionFactory">The connection factory.</param>
+        public UnitOfWork(IConnectionFactory connectionFactory)
         {
-            connection = new SqlConnection(connectionString);
+            this.connection = connectionFactory.Connection;
+        }
+
+        /// <inheritdoc />
+        public void BeginTransaction()
+        {
             connection.Open();
             transaction = connection.BeginTransaction();
         }

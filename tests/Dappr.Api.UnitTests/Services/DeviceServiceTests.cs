@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Dapp.Api.Configuration.Settings;
 using Dapp.Api.Data.Model;
 using Dapp.Api.Services;
@@ -16,7 +17,7 @@ namespace Dappr.Api.UnitTests.Services
 
         public DeviceServiceTests()
         {
-            this.mockRepository = new MockRepository(MockBehavior.Strict);
+            this.mockRepository = new MockRepository(MockBehavior.Loose);
 
             this.mockOptions = this.mockRepository.Create<IOptions<ConnectionSettings>>();
         }
@@ -32,7 +33,7 @@ namespace Dappr.Api.UnitTests.Services
         }
 
         [Fact]
-        public void GetAll_WithDevice_ShouldNotThrowAnyExceptions()
+        public void Add_WithDevice_ShouldNotThrowAnyExceptions()
         {
             // Arrange 
             Device device = new Device
@@ -48,10 +49,36 @@ namespace Dappr.Api.UnitTests.Services
             addAction.Should().NotThrow();
         }
 
-        private DeviceService CreateService()
+        private IDeviceService CreateService()
         {
-            return new DeviceService(
-                this.mockOptions.Object);
+            IOptions<ConnectionSettings> options = Options.Create(new ConnectionSettings());
+
+            // TODO: Add real DB connection with SqlLite in memory ServiceStack.OrmLite.SqlServer.Core
+            // var connection = new Mock<IDbConnection>();
+
+            //var unitOfWorkMock = this.mockRepository.Create<IUnitOfWork>();
+
+            //unitOfWorkMock
+            //    .SetupGet(x => x.DeviceRepository)
+            //    .Returns(() => new DeviceRepository(connection.Object.BeginTransaction()));
+
+            // return new DeviceService(options, unitOfWorkMock.Object);
+
+            var service = this.mockRepository.Create<IDeviceService>();
+            
+            service.Setup(r => r.GetAll())
+                .Returns(new List<Device>
+                {
+                    new Device
+                    {
+                        DeviceId = Guid.Parse("3da270a0-2c07-4062-b2d0-90361191a088"),
+                        DeviceTitle = "DFVVV-1234"
+                    }
+                });
+
+            service.Setup(r => r.Add(It.IsAny<Device>()));
+
+            return service.Object;
         }
     }
 }

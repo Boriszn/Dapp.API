@@ -1,8 +1,8 @@
 using System.Data;
 
-namespace Dapp.Api.Data
+namespace Dapp.Api.Data.Infrastructure
 {
-    internal abstract class RepositoryBase
+    public abstract class RepositoryBase
     {
         /// <summary>
         /// Gets the transaction.

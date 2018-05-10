@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Dapp.Api.Data.Infrastructure;
 using Dapp.Api.Data.Model;
 using Dapper;
 
-namespace Dapp.Api.Data
+namespace Dapp.Api.Data.Repositories
 {
-    internal class DeviceRepository : RepositoryBase, IDeviceRepository
+    /// <summary>
+    /// Repository for the Device
+    /// </summary>
+    /// <seealso cref="Dapp.Api.Data.Infrastructure.RepositoryBase" />
+    /// <seealso cref="Dapp.Api.Data.Repositories.IDeviceRepository" />
+    public class DeviceRepository : RepositoryBase, IDeviceRepository
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DeviceRepository"/> class.
@@ -41,7 +47,7 @@ namespace Dapp.Api.Data
                 throw new ArgumentNullException(nameof(device));
 
             device.DeviceId = Connection.ExecuteScalar<Guid>(
-                "INSERT INTO Devices(DeviceId, DeviceTitle) VALUES(@DeviceId, @DeviceTitle, @Age); SELECT SCOPE_IDENTITY()",
+                "INSERT INTO Devices(DeviceId, DeviceTitle) VALUES(@DeviceId, @DeviceTitle); SELECT SCOPE_IDENTITY()",
                 new { device.DeviceId, device.DeviceTitle },
                 Transaction
             );
