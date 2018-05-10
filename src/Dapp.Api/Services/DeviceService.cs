@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Dapp.Api.Data;
+using Dapp.Api.Data.Infrastructure;
 using Dapp.Api.Data.Model;
 
 namespace Dapp.Api.Services

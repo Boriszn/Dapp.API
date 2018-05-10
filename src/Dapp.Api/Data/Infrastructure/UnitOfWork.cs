@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Data;
+using Dapp.Api.Data.Repositories;
 
-namespace Dapp.Api.Data
+namespace Dapp.Api.Data.Infrastructure
 {
     /// <inheritdoc />
     public class UnitOfWork : IUnitOfWork, IDisposable

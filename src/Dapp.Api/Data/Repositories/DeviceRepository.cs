@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Dapp.Api.Data.Infrastructure;
 using Dapp.Api.Data.Model;
 using Dapper;
 
-namespace Dapp.Api.Data
+namespace Dapp.Api.Data.Repositories
 {
+    /// <summary>
+    /// Repository for the Device
+    /// </summary>
+    /// <seealso cref="Dapp.Api.Data.Infrastructure.RepositoryBase" />
+    /// <seealso cref="Dapp.Api.Data.Repositories.IDeviceRepository" />
     public class DeviceRepository : RepositoryBase, IDeviceRepository
     {
         /// <summary>

@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace Dapp.Api.Data
+namespace Dapp.Api.Data.Infrastructure
 {
     public abstract class RepositoryBase
     {

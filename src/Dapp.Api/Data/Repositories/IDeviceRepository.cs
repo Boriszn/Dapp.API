@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Dapp.Api.Data.Model;
 
-namespace Dapp.Api.Data
+namespace Dapp.Api.Data.Repositories
 {
     public interface IDeviceRepository
     {

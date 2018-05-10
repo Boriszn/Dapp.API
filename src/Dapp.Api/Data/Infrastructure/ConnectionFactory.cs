@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using Dapp.Api.Configuration.Settings;
 using Microsoft.Extensions.Options;
 
-namespace Dapp.Api.Data
+namespace Dapp.Api.Data.Infrastructure
 {
     public class ConnectionFactory : IConnectionFactory
     {
