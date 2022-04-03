@@ -1,6 +1,6 @@
 using System.Data;
-using System.Data.SqlClient;
 using Dapp.Api.Configuration.Settings;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 
 namespace Dapp.Api.Data.Infrastructure

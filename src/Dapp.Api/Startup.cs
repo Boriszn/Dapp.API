@@ -9,7 +9,7 @@ namespace Dapp.Api
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -29,7 +29,9 @@ namespace Dapp.Api
         public void ConfigureServices(IServiceCollection services)
         {
             ConfigurationOptions.ConfigureService(services, Configuration);
-           
+
+            services.AddApplicationInsightsTelemetry();
+
             // Add framework services.
             services.AddMvc();
 
@@ -44,12 +46,18 @@ namespace Dapp.Api
         /// <param name="app">The application.</param>
         /// <param name="env">The env.</param>
         /// <param name="loggerFactory">The logger factory.</param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            using (var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole()))
+            {
+            }
 
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+            });
 
             //Cunfigure the Swagger API documentation
             SwaggerConfiguration.Configure(app);
