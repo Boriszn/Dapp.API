@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
 using Dapp.Api.Data.Model;
 using Dapp.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.Swagger.Annotations;
 
 namespace Dapp.Api.Controllers
 {
@@ -49,8 +51,8 @@ namespace Dapp.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [SwaggerOperation("CreateDevice")]
-        [SwaggerResponse(204, null, "Device was saved successfuly")]
-        [SwaggerResponse(400, null, "Error in saving the Device")]
+        [SwaggerResponse(HttpStatusCode.NoContent, "Device was saved successfuly")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Error in saving the Device")]
         public IActionResult Post([FromBody]Device deviceViewModel)
         {
             if (!this.ModelState.IsValid)

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 
 namespace Dapp.Api.Configuration
 {
@@ -22,7 +18,7 @@ namespace Dapp.Api.Configuration
             // Swagger API documentation
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info {Title = "Device Api", Version = "v1.0"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Device Api", Version = "v1.0" });
             });
         }
 
